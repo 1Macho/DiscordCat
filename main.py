@@ -4,19 +4,13 @@ import discord
 from discord.ext import tasks
 from dotenv import load_dotenv
 
-load_dotenv()
-token = os.getenv('DISCORD_TOKEN')
-channel_name = os.getenv('CHANNEL')
-
 client = discord.Client()
-
-@client.event
-async def on_ready():
-    do_operate.start()
 
 @tasks.loop(seconds=1)
 async def do_operate ():
     line = input()
+    if line == "":
+        return
     for guild in client.guilds:
         words = line.split(" ")
         new_words = ""
@@ -33,5 +27,12 @@ async def do_operate ():
             if channel.name == channel_name:
                 await channel.send(content=new_words)
 
-print(token)
+@client.event
+async def on_ready():
+    do_operate.start()
+
+load_dotenv()
+token = os.getenv('DISCORD_TOKEN')
+channel_name = os.getenv('CHANNEL')
+
 client.run(token)
