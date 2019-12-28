@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 client = discord.Client()
 
-@tasks.loop(seconds=1)
+@tasks.loop(seconds=0.1)
 async def do_operate ():
     line = input()
     if line == "":
