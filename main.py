@@ -9,6 +9,7 @@ client = discord.Client()
 @tasks.loop(seconds=0.1)
 async def do_operate ():
     line = input()
+    line = line.encode("utf-8")
     if line == "":
         return
     for guild in client.guilds:
@@ -25,6 +26,7 @@ async def do_operate ():
                 new_words += word + " "
         for channel in guild.channels:
             if channel.name == channel_name:
+                print(new_words)
                 await channel.send(content=new_words)
 
 @client.event
